@@ -33,3 +33,9 @@
 
 MIT（[LICENSE](LICENSE)）。出どころは [SOURCES.md](SOURCES.md)。ほかの人が共有したBotの写しは置いていません。
 「Grok」「Grok Bot」は xAI の製品名で、ここでは文面の用途を示すためだけに使っています。
+
+## 関連
+
+- サイト：[botshelfvampire.com](https://botshelfvampire.com/)。全部を1つの索引で探す：[Explore](https://botshelfvampire.com/explore/)
+- [botshelf-ai-team-registry](https://github.com/BotShelfVampire/botshelf-ai-team-registry)：Build Library のレジストリと、無料のAIチーム（`free-ai-teams/`、MIT）
+- [botshelf-mcp](https://github.com/BotShelfVampire/botshelf-mcp)：棚を読む、読み取り専用の MCP サーバー（MCP Registry での名前は `com.botshelfvampire/botshelf`）。登録の書き方：https://botshelfvampire.com/mcp/

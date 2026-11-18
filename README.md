@@ -129,3 +129,9 @@ MIT, see [LICENSE](LICENSE). Sources: [SOURCES.md](SOURCES.md). Other people's s
 
 If a text does not behave as it says, open an issue with the item name, what you ran it on, and what happened (leave out private data).
 "Grok" and "Grok Bot" are names of xAI products; they are used here only to say what the texts are for.
+
+## Related
+
+- Site: [botshelfvampire.com](https://botshelfvampire.com/). Everything in one searchable index: [Explore](https://botshelfvampire.com/explore/)
+- [botshelf-ai-team-registry](https://github.com/BotShelfVampire/botshelf-ai-team-registry): the Build Library registry and the free AI teams (`free-ai-teams/`, MIT)
+- [botshelf-mcp](https://github.com/BotShelfVampire/botshelf-mcp): the read-only MCP server for the shelf (`com.botshelfvampire/botshelf` in the MCP Registry). Setup lines: https://botshelfvampire.com/mcp/
