@@ -1,0 +1,17 @@
+{
+  "name": "botshelf-grok-bot-tools",
+  "displayName": "BotShelf Grok Bot tools (unofficial)",
+  "version": "1.0.0",
+  "description": "Unofficial, Untested skills in SKILL.md form for Grok Build and Grok Bot. Every skill stops before sending, paying, deleting or publishing.",
+  "author": {
+    "name": "BotShelf Vampire",
+    "url": "https://botshelfvampire.com"
+  },
+  "homepage": "https://botshelfvampire.com/grok-bot/tools/",
+  "repository": "https://github.com/BotShelfVampire/botshelf-grok-bot-tools",
+  "license": "MIT",
+  "keywords": [
+    "botshelf",
+    "botshelf-vampire"
+  ]
+}

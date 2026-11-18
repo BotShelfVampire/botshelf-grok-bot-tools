@@ -1,0 +1,15 @@
+{
+  "name": "botshelfvampire-grok-bot-tools",
+  "owner": {
+    "name": "BotShelf Vampire",
+    "url": "https://botshelfvampire.com"
+  },
+  "description": "Unofficial Grok Bot tools from BotShelf Vampire (Untested).",
+  "plugins": [
+    {
+      "name": "botshelf-grok-bot-tools",
+      "source": "./",
+      "description": "Unofficial skills in SKILL.md form (Untested)."
+    }
+  ]
+}
