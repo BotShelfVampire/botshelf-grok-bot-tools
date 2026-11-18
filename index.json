@@ -5,7 +5,7 @@
   "status": "Untested",
   "license": "MIT",
   "sources_read_on": "2026-11-18",
-  "count": 40,
+  "count": 71,
   "items": [
     {
       "id": "skill-source-checked-brief",
@@ -105,6 +105,193 @@
       ],
       "file": "skills/calendar-conflict-sweep/SKILL.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-calendar-conflict-sweep/"
+    },
+    {
+      "id": "skill-test-gap-list",
+      "kind": "skill",
+      "title": "Changed paths and the tests they still need",
+      "title_ja": "変更された処理経路と不足するテストの一覧",
+      "does": "Maps changed code paths to existing tests, lists gaps with search evidence, and proposes one first test per gap. Stops before writing files, committing or pushing.",
+      "does_ja": "変更された処理経路と既存テストを照合し、調べた範囲を添えて不足を挙げます。各不足について最初に書くテストを1件提案し、ファイルの書き込み・コミット・pushの前で止まります。",
+      "runs_on": [
+        "Grok Build"
+      ],
+      "topic": "Testing",
+      "stops": [
+        "Before writing source, tests or reports to files: return the gap list for approval.",
+        "Before running tests or collecting new coverage: use existing local evidence for this review.",
+        "Before committing, pushing, merging, deploying, force operations or opening a pull request.",
+        "Before sending messages, publishing, purchasing, paying, deleting or changing production.",
+        "When revisions, test scope or coverage evidence disagree: report the uncertainty instead of claiming a path is untested."
+      ],
+      "first3": [
+        "Fill the blanks and save the text as ./.grok/skills/test-gap-list/SKILL.md in the repository.",
+        "In Grok Build, invoke /test-gap-list on a small local diff with the named test scope.",
+        "Compare the path map and proposed test inputs with the cited tests before approving any file writes."
+      ],
+      "blanks": [
+        {
+          "name": "[REPOSITORY]",
+          "what": "Local repository containing the diff and tests."
+        },
+        {
+          "name": "[BASE_REF]",
+          "what": "Local revision before the changes."
+        },
+        {
+          "name": "[TARGET_REF]",
+          "what": "Local revision whose changed paths need review."
+        },
+        {
+          "name": "[TEST_SCOPE]",
+          "what": "Test directories, suites and configuration to inspect."
+        },
+        {
+          "name": "[COVERAGE_EVIDENCE]",
+          "what": "Existing local coverage report with revision and run scope, or none."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/build/features/skills-plugins-marketplaces"
+      ],
+      "file": "skills/test-gap-list/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-test-gap-list/"
+    },
+    {
+      "id": "skill-changelog-entry-check",
+      "kind": "skill",
+      "title": "Changelog entry check, findings only",
+      "title_ja": "変更履歴と差分の照合（所見まで）",
+      "does": "Compares an existing changelog entry with the diff, lists missing or overstated details, and stops before file edits, commits, pushes or tags.",
+      "does_ja": "既存の変更履歴を差分と照合し、抜けている説明や言い過ぎている記述を挙げます。ファイル編集・コミット・push・タグ作成の前で止まります。",
+      "runs_on": [
+        "Grok Build"
+      ],
+      "topic": "Releases",
+      "stops": [
+        "Before editing files, committing, pushing or tagging: it returns findings only.",
+        "Before merging, deploying or any force operation.",
+        "Before sending messages, publishing notes, purchasing, paying, deleting files or changing production.",
+        "When the entry or comparison is missing or changes during review: affected findings remain unresolved."
+      ],
+      "first3": [
+        "Fill the blanks and save the text as ./.grok/skills/changelog-entry-check/SKILL.md in the repository.",
+        "In Grok Build, invoke /changelog-entry-check with one entry and its local comparison range.",
+        "Compare each reported omission or overstatement with the cited entry and code before applying corrections."
+      ],
+      "blanks": [
+        {
+          "name": "[REPOSITORY]",
+          "what": "Local repository containing the change and changelog."
+        },
+        {
+          "name": "[CHANGELOG_ENTRY]",
+          "what": "Changelog file and exact section or entry to inspect."
+        },
+        {
+          "name": "[BASE_REF]",
+          "what": "Local reference used as the comparison base."
+        },
+        {
+          "name": "[CHANGE_TARGET]",
+          "what": "Local endpoint reference or supplied diff describing the change."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/build/features/skills-plugins-marketplaces"
+      ],
+      "file": "skills/changelog-entry-check/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-changelog-entry-check/"
+    },
+    {
+      "id": "skill-contract-date-list",
+      "kind": "skill",
+      "title": "Contract dates and terms, quoted clauses only",
+      "title_ja": "契約の日付と条件の一覧（条文の引用付き）",
+      "does": "Lists dates, notice periods and renewal terms from supplied contract text, with a clause quote for each. Marks unclear wording and stops before signing, sending or cancelling; gives no legal opinion.",
+      "does_ja": "契約文にある日付・通知期間・更新条件を、条文の引用付きで一覧にします。曖昧な文言を示し、署名・送信・解約の前で止まります。法的な意見は述べません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Contracts",
+      "stops": [
+        "Before signing, sending a notice, accepting terms or cancelling an agreement.",
+        "Before sending or publishing the list, purchasing, paying, deleting records or changing production.",
+        "When a clause is ambiguous or conflicts with another passage: it quotes both and leaves the meaning unresolved.",
+        "When pages, amendments or referenced terms are missing: it marks the affected entries incomplete and does not invent a deadline."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into the Bot's chat, and ask it to save a skill named contract-date-list.",
+        "Use contract-date-list on a contract copy and its supplied amendments, with sensitive details removed.",
+        "Read every quoted clause beside its date or term, and review the unresolved entries before using the list."
+      ],
+      "blanks": [
+        {
+          "name": "[CONTRACT_TEXT]",
+          "what": "The contract text or readable copy to inspect."
+        },
+        {
+          "name": "[RELATED_DOCUMENTS]",
+          "what": "Supplied amendments, schedules and referenced terms, or none supplied."
+        },
+        {
+          "name": "[AS_OF_DATE]",
+          "what": "The reference date for labelling explicit dates as past or upcoming."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/contract-date-list/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-contract-date-list/"
+    },
+    {
+      "id": "skill-dead-code-candidates",
+      "kind": "skill",
+      "title": "Dead code candidates, evidence before removal",
+      "title_ja": "未使用に見えるコードの候補と根拠",
+      "does": "Lists code that appears unused, with reference searches, search scope and possible indirect callers. Stops at a candidate list; deletes nothing and opens no pull request.",
+      "does_ja": "未使用に見えるコードを、参照の検索結果、検索範囲、間接的に呼ばれる可能性とともに挙げます。候補一覧までで止まり、削除もプルリクエストの作成もしません。",
+      "runs_on": [
+        "Grok Build"
+      ],
+      "topic": "Code review",
+      "stops": [
+        "Before deleting or editing code: candidates are review notes, not removal instructions.",
+        "Before opening a pull request, committing, pushing, merging, deploying or any force operation.",
+        "Before sending messages, publishing, purchasing, paying or changing production.",
+        "When a search finds no references: it records the scope and checks for indirect use before listing a candidate.",
+        "When files are unreadable or the source changes: it reports incomplete evidence and withholds affected conclusions."
+      ],
+      "first3": [
+        "Fill the blanks and save the text as ./.grok/skills/dead-code-candidates/SKILL.md in the repository.",
+        "In Grok Build, invoke /dead-code-candidates for a small directory with known entry points.",
+        "Read the search evidence and possible indirect uses for each candidate before deciding whether to investigate removal."
+      ],
+      "blanks": [
+        {
+          "name": "[REPOSITORY]",
+          "what": "The local repository to inspect without changing files."
+        },
+        {
+          "name": "[CANDIDATE_SCOPE]",
+          "what": "Directories or modules where unused code candidates may be listed."
+        },
+        {
+          "name": "[ENTRY_POINTS]",
+          "what": "Known application, command, job or public interface entry points; write unknown where needed."
+        },
+        {
+          "name": "[EXCLUSIONS]",
+          "what": "Files or directories that must not be searched; write none if there are no exclusions."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/build/features/skills-plugins-marketplaces"
+      ],
+      "file": "skills/dead-code-candidates/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-dead-code-candidates/"
     },
     {
       "id": "skill-dependency-update-plan",
@@ -240,6 +427,53 @@
       ],
       "file": "skills/failing-test-triage/SKILL.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-failing-test-triage/"
+    },
+    {
+      "id": "skill-faq-from-tickets",
+      "kind": "skill",
+      "title": "FAQ proposals from resolved tickets",
+      "title_ja": "解決済み問い合わせから作るFAQ案",
+      "does": "Proposes FAQ questions and answers from resolved tickets, removes customer details and lists supporting ticket references for each. Stops before publishing or editing the help site.",
+      "does_ja": "解決済みの問い合わせからFAQの質問と回答を提案し、顧客情報を除いたうえで、各案の根拠となる問い合わせ番号を示します。公開やヘルプサイトの編集前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Support",
+      "stops": [
+        "Before publishing FAQ entries or editing the help site: all proposals stay in chat.",
+        "Before sending, purchasing, paying, deleting records or changing production.",
+        "Before copying customer details into a proposal: it removes identifying information and omits cases that cannot be safely generalized.",
+        "When a resolution is absent, disputed or outdated: it withholds the affected answer and reports why."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into your support Bot chat, and ask it to save a skill named faq-from-tickets.",
+        "Ask it to use faq-from-tickets on a small set of resolved tickets in the stated scope.",
+        "Check each proposed answer against its ticket references and read the text for remaining customer details before considering publication."
+      ],
+      "blanks": [
+        {
+          "name": "[TICKET_SOURCE]",
+          "what": "The supplied export or connected source containing resolved tickets."
+        },
+        {
+          "name": "[TICKET_SCOPE]",
+          "what": "The date range, product area and resolution status defining eligible tickets."
+        },
+        {
+          "name": "[AUDIENCE]",
+          "what": "The intended FAQ readers and their expected knowledge."
+        },
+        {
+          "name": "[ENTRY_LIMIT]",
+          "what": "The maximum number of FAQ entries to propose in this run."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/faq-from-tickets/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-faq-from-tickets/"
     },
     {
       "id": "skill-incident-first-notes",
@@ -382,6 +616,159 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-meeting-notes-to-actions/"
     },
     {
+      "id": "skill-migration-plan-review",
+      "kind": "skill",
+      "title": "Migration plan review, no database execution",
+      "title_ja": "データベース移行計画の確認（実行なし）",
+      "does": "Reviews a migration file for locking, backfill size, code rollout order and recovery options. Returns risks and open questions, then stops before file changes; it never runs a migration against any database.",
+      "does_ja": "移行ファイルを読み、ロック、データ補完の規模、コードの適用順序、復旧方法を確認します。リスクと未解決の点を返し、ファイル変更の前で止まります。どのデータベースに対しても移行を実行しません。",
+      "runs_on": [
+        "Grok Build"
+      ],
+      "topic": "Databases",
+      "stops": [
+        "Never executes a migration against any database, including a local or disposable database.",
+        "Before changing files, committing, pushing, merging, deploying or force operations: it asks for approval.",
+        "Before sending messages, publishing, purchasing, paying, deleting or changing production.",
+        "When engine details or data size are unknown: it leaves dependent risk judgments open.",
+        "When migration or code revisions change during review: it marks affected conclusions as stale."
+      ],
+      "first3": [
+        "Fill the blanks and save the text as ./.grok/skills/migration-plan-review/SKILL.md in the repository.",
+        "In Grok Build, invoke /migration-plan-review with one migration file and its related local code change.",
+        "Compare the operation risks and rollout order with the cited files, and supply missing engine or data size details before acting."
+      ],
+      "blanks": [
+        {
+          "name": "[REPOSITORY]",
+          "what": "Local repository containing the migration and application code."
+        },
+        {
+          "name": "[MIGRATION_FILE]",
+          "what": "Migration file to inspect without executing it."
+        },
+        {
+          "name": "[CODE_CHANGE]",
+          "what": "Related local code diff or revision range, including its base."
+        },
+        {
+          "name": "[ENGINE_DETAILS]",
+          "what": "Database engine, version and supplied notes about relevant operation behavior."
+        },
+        {
+          "name": "[DATA_PROFILE]",
+          "what": "Dated table size estimates, write activity and any supplied backfill limits; mark unknowns."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/build/features/skills-plugins-marketplaces"
+      ],
+      "file": "skills/migration-plan-review/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-migration-plan-review/"
+    },
+    {
+      "id": "skill-newsletter-draft-from-notes",
+      "kind": "skill",
+      "title": "Newsletter issue from supplied notes",
+      "title_ja": "手元のメモから作るニュースレターの下書き",
+      "does": "Turns supplied notes and sources into one newsletter issue with a subject, preview and cited sections. Stops at a draft before sending or publishing.",
+      "does_ja": "指定されたメモと資料から、件名・プレビュー文・出典付きの本文を備えたニュースレターを1号分作ります。送信・公開の前で止まり、下書きとして返します。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Writing",
+      "stops": [
+        "Before sending, scheduling delivery or publishing: the issue stays a draft in chat.",
+        "Before purchasing access, paying, deleting material or changing production.",
+        "When a fact has no support in the supplied sources: leave it out of the issue and record the gap.",
+        "When notes conflict with sources or evidence is stale: hold the affected section and show what needs clarification."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into the Bot chat for writing, and ask it to save the process as a skill named newsletter-draft-from-notes.",
+        "Ask for one issue using a small set of notes and their supporting sources.",
+        "Read the subject, preview and body beside their citations; check the issue scope and unresolved editorial questions."
+      ],
+      "blanks": [
+        {
+          "name": "[NOTES]",
+          "what": "The notes containing candidate stories for this issue."
+        },
+        {
+          "name": "[SOURCES]",
+          "what": "The supplied documents that may support facts in the issue."
+        },
+        {
+          "name": "[ISSUE_SCOPE]",
+          "what": "The issue's theme, covered period and exclusions."
+        },
+        {
+          "name": "[AUDIENCE]",
+          "what": "The intended readers and the tone they need."
+        },
+        {
+          "name": "[LENGTH]",
+          "what": "The target word count for the issue body."
+        },
+        {
+          "name": "[FRESHNESS_RULE]",
+          "what": "The required dates or versions of supporting material."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/newsletter-draft-from-notes/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-newsletter-draft-from-notes/"
+    },
+    {
+      "id": "skill-customer-reply-draft",
+      "kind": "skill",
+      "title": "One customer reply from named policies",
+      "title_ja": "指定したポリシーに基づく顧客返信の下書き",
+      "does": "Drafts one customer reply using only named policy documents, with clause references and marked gaps. Stops before sending, refunding, closing the case or changing customer records.",
+      "does_ja": "指定したポリシー文書だけを根拠に、該当箇所と不足点を添えて顧客への返信を1通下書きします。送信・返金・問い合わせの終了・顧客記録の変更前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Support",
+      "stops": [
+        "Before sending or saving over an existing reply: the proposed text stays in chat.",
+        "Before issuing a refund, closing a case or changing customer records.",
+        "Before publishing, purchasing, paying, deleting or changing production.",
+        "Where the named policies are silent, contradictory or outdated: it marks the gap and makes no promise."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into your support Bot chat, and ask it to save a skill named customer-reply-draft.",
+        "Ask it to use customer-reply-draft on one customer message with the named current policy documents.",
+        "Read the draft beside its policy references and resolve each marked gap before using the reply."
+      ],
+      "blanks": [
+        {
+          "name": "[CUSTOMER_MESSAGE]",
+          "what": "The single customer message and supplied conversation context to read."
+        },
+        {
+          "name": "[POLICY_DOCUMENTS]",
+          "what": "The only policy documents allowed as answer sources, including their versions or dates."
+        },
+        {
+          "name": "[TONE]",
+          "what": "The tone for this reply."
+        },
+        {
+          "name": "[REPLY_LIMIT]",
+          "what": "The maximum word count for the customer reply, excluding review notes."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/customer-reply-draft/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-customer-reply-draft/"
+    },
+    {
       "id": "skill-pr-review-notes",
       "kind": "skill",
       "title": "PR review notes, no posted comments",
@@ -426,6 +813,52 @@
       ],
       "file": "skills/pr-review-notes/SKILL.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-pr-review-notes/"
+    },
+    {
+      "id": "skill-readme-command-check",
+      "kind": "skill",
+      "title": "README command check, proposed edits only",
+      "title_ja": "READMEのコマンド確認（修正案まで）",
+      "does": "Checks README commands, paths and task names against repository definitions. Returns proposed edits and stops before executing commands, editing files, committing or pushing.",
+      "does_ja": "READMEのコマンド・パス・タスク名をリポジトリ内の定義と照合します。修正案を返し、コマンド実行・ファイル編集・コミット・pushの前で止まります。",
+      "runs_on": [
+        "Grok Build"
+      ],
+      "topic": "Docs",
+      "stops": [
+        "Before executing documented commands or installing dependencies: this is a static review.",
+        "Before editing files, committing, pushing, merging, deploying or any force operation.",
+        "Before sending messages, publishing documentation, purchasing, paying, deleting files or changing production.",
+        "When definitions are missing or changed: it marks the affected instructions unresolved instead of guessing a command."
+      ],
+      "first3": [
+        "Fill the blanks and save the text as ./.grok/skills/readme-command-check/SKILL.md in the repository.",
+        "In Grok Build, invoke /readme-command-check for one README section and a named environment.",
+        "Read each proposed edit beside its README line and repository definition before changing the document."
+      ],
+      "blanks": [
+        {
+          "name": "[REPOSITORY]",
+          "what": "Local repository whose files and task definitions should match the README."
+        },
+        {
+          "name": "[README_FILE]",
+          "what": "Repository path to the README to inspect."
+        },
+        {
+          "name": "[SECTIONS]",
+          "what": "README sections whose commands and paths should be checked."
+        },
+        {
+          "name": "[ENVIRONMENT]",
+          "what": "Intended shell and operating system for the instructions."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/build/features/skills-plugins-marketplaces"
+      ],
+      "file": "skills/readme-command-check/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-readme-command-check/"
     },
     {
       "id": "skill-receipt-reconcile",
@@ -624,6 +1057,57 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-review-a-draft-skill/"
     },
     {
+      "id": "skill-spreadsheet-sanity-check",
+      "kind": "skill",
+      "title": "Spreadsheet export checks, row report only",
+      "title_ja": "表の出力データ確認（該当行の報告まで）",
+      "does": "Checks a spreadsheet export for blanks, duplicates, values outside stated ranges and totals that disagree. Reports source rows and stops before editing the source file or sending the report.",
+      "does_ja": "表の出力データを調べ、空欄・重複・指定範囲外の値・合わない合計を元の行番号付きで報告します。元ファイルの編集や報告の送信の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Data",
+      "stops": [
+        "Before editing the source file, replacing values, removing rows or recalculating the original workbook.",
+        "Before sending or publishing the report, purchasing, paying, deleting files or changing production.",
+        "When a uniqueness rule, allowed range or total definition is absent: it marks that check not assessed rather than inventing a rule.",
+        "When the export is incomplete or its values cannot be read: it reports the affected rows and limits its conclusions."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into the Bot's chat, and ask it to save a skill named spreadsheet-sanity-check.",
+        "Use spreadsheet-sanity-check on a small export with stated required columns, duplicate keys, ranges and total rules.",
+        "Compare the reported row references and arithmetic with the export before requesting any separate correction."
+      ],
+      "blanks": [
+        {
+          "name": "[EXPORT]",
+          "what": "The spreadsheet export to read, with sensitive fields removed."
+        },
+        {
+          "name": "[SCOPE]",
+          "what": "The tables or sheets to inspect and the location of their headers."
+        },
+        {
+          "name": "[COLUMN_RULES]",
+          "what": "Required columns, value types, allowed ranges and any permitted normalization."
+        },
+        {
+          "name": "[UNIQUE_KEY]",
+          "what": "The column or combination of columns that should identify one record."
+        },
+        {
+          "name": "[TOTAL_RULES]",
+          "what": "Which rows contribute to each total, including units and rounding tolerance."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/spreadsheet-sanity-check/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-spreadsheet-sanity-check/"
+    },
+    {
       "id": "skill-support-ticket-sort",
       "kind": "skill",
       "title": "Support tickets, sorted with reply drafts",
@@ -720,6 +1204,113 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-handoff-note/"
     },
     {
+      "id": "skill-travel-option-compare",
+      "kind": "skill",
+      "title": "Travel option comparison, no booking",
+      "title_ja": "旅行候補の比較（予約前まで）",
+      "does": "Looks up current travel prices and compares options against dates, budget and travel rules. Returns priced options and gaps, then stops before booking, paying or holding a seat.",
+      "does_ja": "実行時に旅行料金を調べ、日程・予算・利用条件に照らして候補を比較します。料金と不足情報を返し、予約・支払い・座席の仮押さえの前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Travel",
+      "stops": [
+        "Before booking, paying, holding a seat or entering checkout: it returns options only.",
+        "Before sending messages, publishing, purchasing, deleting records or changing production.",
+        "When a current price or required fee is unavailable: it marks the total incomplete and does not claim the option fits the budget.",
+        "When dates, traveler count or a required travel rule is unclear: it reports the constraint gap before making a shortlist."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into the travel Bot's chat, and ask it to save the process as a skill named travel-option-compare.",
+        "Ask it to use travel-option-compare for one trip with fixed dates, a stated budget and explicit rules.",
+        "Read the price timestamps, fee gaps and rule checks before deciding whether to pursue any option."
+      ],
+      "blanks": [
+        {
+          "name": "[TRIP]",
+          "what": "Origin, destination and whether transport, lodging or both should be compared."
+        },
+        {
+          "name": "[DATES]",
+          "what": "Travel dates, acceptable time windows and local time zones."
+        },
+        {
+          "name": "[TRAVELERS]",
+          "what": "Traveler count and the fare or room categories needed, without personal identifiers."
+        },
+        {
+          "name": "[BUDGET]",
+          "what": "Total spending ceiling and currency, including the costs it must cover."
+        },
+        {
+          "name": "[RULES]",
+          "what": "Required conditions and optional preferences, such as baggage, transfers or cancellation terms."
+        },
+        {
+          "name": "[TRAVEL_SOURCES]",
+          "what": "The travel sources the Bot may read for current prices and terms."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/travel-option-compare/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-travel-option-compare/"
+    },
+    {
+      "id": "skill-vendor-quote-compare",
+      "kind": "skill",
+      "title": "Vendor quote comparison, questions only",
+      "title_ja": "取引先の見積比較（質問案まで）",
+      "does": "Compares named vendors against the same requested line items, shows missing terms and drafts questions for each vendor. It stops before buying, accepting a quote or sending anything.",
+      "does_ja": "指定した取引先の見積を同じ依頼明細で比較し、不足条件と取引先ごとの質問案を示します。購入・見積の承諾・送信の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Purchasing",
+      "stops": [
+        "Before buying, accepting a quote, placing an order or sending vendor questions: it returns a comparison only.",
+        "Before publishing, paying, deleting records or changing production.",
+        "When quantities, specifications or currencies differ: it marks the offers as not directly comparable.",
+        "When a quote is expired, unreadable or missing: it lists that vendor's gap without inventing an offer."
+      ],
+      "first3": [
+        "Fill the blanks, paste the text into the purchasing Bot's chat, and ask it to save the process as a skill named vendor-quote-compare.",
+        "Ask it to use vendor-quote-compare on two quotes for the same requested line items.",
+        "Check the item mapping, excluded costs and vendor questions against the original quotes before choosing any next action."
+      ],
+      "blanks": [
+        {
+          "name": "[VENDORS]",
+          "what": "The vendors whose quotes belong in this comparison."
+        },
+        {
+          "name": "[QUOTE_FILES]",
+          "what": "The quote documents to read, identified by vendor and revision."
+        },
+        {
+          "name": "[LINE_ITEMS]",
+          "what": "The common item list, required quantities, units and specifications."
+        },
+        {
+          "name": "[REQUIREMENTS]",
+          "what": "Required delivery timing, support, payment terms and other comparison conditions."
+        },
+        {
+          "name": "[COMPARISON_DATE]",
+          "what": "The date against which quote validity should be checked."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "skills/vendor-quote-compare/SKILL.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/skill-vendor-quote-compare/"
+    },
+    {
       "id": "skill-weekly-status-digest",
       "kind": "skill",
       "title": "Weekly status digest, draft only",
@@ -766,6 +1357,46 @@
       ],
       "file": "skills/weekly-status-digest/SKILL.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/skill-weekly-status-digest/"
+    },
+    {
+      "id": "routine-email-task-proposals",
+      "kind": "routine",
+      "title": "Email task proposals, chat list only",
+      "title_ja": "メールからタスク案をチャット内に記録",
+      "does": "Turns matching mail to the Bot’s own address into one proposed task in a chat list. Stops before replies, task execution or creating anything in other apps.",
+      "does_ja": "Bot自身のアドレスに届いた対象メールから、タスク案を1件作り、チャット内の一覧に記録します。返信、タスクの実行、他のアプリでの作成の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Intake",
+      "stops": [
+        "Before replying, forwarding, executing a proposed task or creating anything in another app.",
+        "Before sending, publishing, purchasing, paying, deleting or changing production.",
+        "When the subject does not begin with the exact prefix: it creates no proposal.",
+        "When the message identifier, body or existing list is missing, unreadable or inconsistent: it reports the gap instead of guessing."
+      ],
+      "first3": [
+        "Fill in the subject prefix and the name of the proposal list in this Bot chat.",
+        "Send the message to the owning Bot and check that the reported trigger uses its own email address and the subject prefix.",
+        "Use Test with a safe matching email. It does real work; check that one proposal appears here, no reply is sent and no external task is created."
+      ],
+      "blanks": [
+        {
+          "name": "[PREFIX]",
+          "what": "The exact text required at the beginning of the subject, including letter case."
+        },
+        {
+          "name": "[TASK_LIST]",
+          "what": "The name of the proposed-task list kept only in this Bot chat."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/how-grok-bot-works",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-email-task-proposals.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-email-task-proposals/"
     },
     {
       "id": "routine-sentry-new-issue-notes",
@@ -949,6 +1580,89 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/routine-renewal-watch-monthly/"
     },
     {
+      "id": "routine-memory-review-monthly",
+      "kind": "routine",
+      "title": "Monthly review of dated memories",
+      "title_ja": "日付・価格・担当者・版を含む記憶の月次確認",
+      "does": "Lists this Bot's memories containing dates, prices, owners or versions and proposes a fresh lookup or forgetting. Stops before looking up replacements or changing remembered information.",
+      "does_ja": "このBotが覚えている日付・価格・担当者・版を含む情報を一覧にし、調べ直すか忘れるかを提案します。代わりの情報の検索や記憶の変更を行う前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Memory",
+      "stops": [
+        "Before forgetting, replacing or otherwise changing remembered information: it asks for approval of the specific proposal.",
+        "Before looking up replacement facts during this review: it returns proposals only.",
+        "Before sending, publishing, purchasing, paying, deleting records or changing production.",
+        "When dates, sources or memories are unavailable: it marks the gaps without inventing an origin or claiming complete coverage."
+      ],
+      "first3": [
+        "Choose a day of month, time and time zone, then send the text to the Bot whose memories you want reviewed.",
+        "Read \"When to run\" and use Edit if the monthly date, time or time zone is wrong.",
+        "Use Test once for the review. It does real work; compare its statements with what you know and check that it only proposed changes."
+      ],
+      "blanks": [
+        {
+          "name": "[DAY]",
+          "what": "Day of month for the review; choose 1 through 28 so it exists every month."
+        },
+        {
+          "name": "[TIME]",
+          "what": "Local time for the monthly review."
+        },
+        {
+          "name": "[TIMEZONE]",
+          "what": "Time zone for the monthly schedule, written out."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-memory-review-monthly.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-memory-review-monthly/"
+    },
+    {
+      "id": "routine-linear-new-issue-notes",
+      "kind": "routine",
+      "title": "New Linear issue triage notes",
+      "title_ja": "新しいLinear課題の仕分けメモ",
+      "does": "Prepares request, missing information and suggested size notes for newly created issues matching one team and label. Stops before changing any Linear status, assignee or label.",
+      "does_ja": "指定のチームとラベルに一致する新規課題について、依頼内容、不足情報、規模の目安をまとめます。Linearのステータス・担当者・ラベルを変更する前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Intake",
+      "stops": [
+        "Before changing a Linear status, assignee or label, or posting a comment.",
+        "Before sending, publishing, purchasing, paying, deleting or changing production.",
+        "When the issue no longer matches the team and label: it leaves the issue unchanged.",
+        "When issue details are unreadable or conflict with the event: it reports the gap without inventing scope."
+      ],
+      "first3": [
+        "Fill in the team and label, then send this message to the Bot that will own issue intake.",
+        "Read the reported trigger and check that it selects newly created issues in only that team with that label.",
+        "Use Test with a safe issue. It does real work; compare the scope notes and suggested size with the issue, and check that Linear is unchanged."
+      ],
+      "blanks": [
+        {
+          "name": "[TEAM]",
+          "what": "The exact Linear team to match."
+        },
+        {
+          "name": "[LABEL]",
+          "what": "The label that must already be present when the issue is created."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-linear-new-issue-notes.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-linear-new-issue-notes/"
+    },
+    {
       "id": "routine-github-pr-review-notes",
       "kind": "routine",
       "title": "New pull request review notes",
@@ -986,6 +1700,89 @@
       ],
       "file": "routines/routine-github-pr-review-notes.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/routine-github-pr-review-notes/"
+    },
+    {
+      "id": "routine-slack-phrase-digest",
+      "kind": "routine",
+      "title": "One-channel Slack phrase digest",
+      "title_ja": "Slackの指定フレーズを1チャンネルから収集",
+      "does": "Adds one source-linked line to a running chat list when a new message in one Slack channel contains the chosen phrase. Stops before posting anything in Slack or acting on the message.",
+      "does_ja": "指定のSlackチャンネルで新しいメッセージに指定フレーズが含まれていたら、出典を添えた1行をチャット内の一覧に加えます。Slackへの投稿やメッセージ内の依頼の実行前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Intake",
+      "stops": [
+        "Before posting or reacting in Slack, or carrying out a request found in a message.",
+        "Before sending, publishing, purchasing, paying, deleting or changing production.",
+        "When the message no longer contains the phrase or differs from the triggering event: it leaves the list unchanged.",
+        "When the message or existing list cannot be read: it reports the gap without rebuilding either from memory."
+      ],
+      "first3": [
+        "Fill in the literal phrase, single channel and chat list name, then send the message to the owning Bot.",
+        "Read the reported trigger and check the channel and phrase. Confirm that mentions of the Bot are not required.",
+        "Use Test with a safe matching message. It does real work; check that the list gains one line and Slack receives no post."
+      ],
+      "blanks": [
+        {
+          "name": "[PHRASE]",
+          "what": "The literal phrase to match, including its letter case."
+        },
+        {
+          "name": "[CHANNEL]",
+          "what": "The one Slack channel to watch."
+        },
+        {
+          "name": "[LIST_NAME]",
+          "what": "The name of the running digest kept only in this Bot chat."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/how-grok-bot-works",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-slack-phrase-digest.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-slack-phrase-digest/"
+    },
+    {
+      "id": "routine-pagerduty-incident-notes",
+      "kind": "routine",
+      "title": "PagerDuty incident and recent change notes",
+      "title_ja": "PagerDuty障害と直近の変更をまとめるメモ",
+      "does": "Writes first notes for a new incident in one service, compares recent change records and suggests checks. Stops before acknowledging, resolving, escalating, paging or changing production.",
+      "does_ja": "指定サービスの新しい障害について初動メモを作り、直近の変更記録と照らし合わせて確認事項を挙げます。応答確認、解決、エスカレーション、担当者の呼び出し、本番変更の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Incidents",
+      "stops": [
+        "Before acknowledging, resolving or escalating an incident, paging anyone or changing production.",
+        "Before sending updates, publishing notes, purchasing, paying or deleting anything.",
+        "When incident or change records are unavailable or stale: it marks missing evidence and leaves the cause unresolved.",
+        "When the incident does not match the named service: it does no incident work."
+      ],
+      "first3": [
+        "Fill the service and change source blanks, then send the text to the Bot that should own the routine.",
+        "Read the configured trigger and check that it matches only new incidents for the named service.",
+        "Use Test with safe incident input; compare the incident time and change records with the notes and check that no incident action occurred."
+      ],
+      "blanks": [
+        {
+          "name": "[SERVICE]",
+          "what": "The exact service name or identifier to match in incident events."
+        },
+        {
+          "name": "[CHANGE_SOURCE]",
+          "what": "The permitted source of deployment, configuration or other service change records."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-pagerduty-incident-notes.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-pagerduty-incident-notes/"
     },
     {
       "id": "routine-email-receipt-filing",
@@ -1109,6 +1906,49 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/routine-webhook-form-intake/"
     },
     {
+      "id": "routine-daily-calendar-brief",
+      "kind": "routine",
+      "title": "Weekday calendar and meeting preparation brief",
+      "title_ja": "平日の予定と会議準備のまとめ",
+      "does": "Lists today's meetings, overlaps and preparation from current calendar entries each weekday. Stops before moving, declining or deleting events, sending invitations or contacting attendees.",
+      "does_ja": "平日ごとに現在のカレンダーから、今日の会議、重複、準備することをまとめます。予定の移動、辞退、削除、招待の送信、出席者への連絡の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Calendar",
+      "stops": [
+        "Before moving, editing, declining or deleting events, sending invitations or contacting attendees.",
+        "Before publishing the brief, purchasing, paying or changing production.",
+        "When a calendar is unreadable or stale: it marks incomplete coverage and does not call the day conflict free.",
+        "When an agenda is missing: it lists preparation as unknown instead of inventing requirements."
+      ],
+      "first3": [
+        "Fill the time, time zone and calendars, then send the text to the owning Bot.",
+        "Check \"When to run\" for weekdays, the local time and time zone; use Edit to correct any mismatch.",
+        "Use Test with safe calendar input, then compare today's events, overlap pairs and preparation notes with the calendar."
+      ],
+      "blanks": [
+        {
+          "name": "[TIME]",
+          "what": "The local time for the weekday brief."
+        },
+        {
+          "name": "[TIMEZONE]",
+          "what": "The time zone for the schedule and the day covered by the brief."
+        },
+        {
+          "name": "[CALENDARS]",
+          "what": "The connected calendars the Bot may read for this brief."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-daily-calendar-brief.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-daily-calendar-brief/"
+    },
+    {
       "id": "routine-morning-inbox-brief",
       "kind": "routine",
       "title": "Weekday morning inbox brief",
@@ -1156,6 +1996,96 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/routine-morning-inbox-brief/"
     },
     {
+      "id": "routine-release-notes-weekly-draft",
+      "kind": "routine",
+      "title": "Weekly release notes from merged changes",
+      "title_ja": "マージ済み変更から作る週次リリースノートの下書き",
+      "does": "Drafts weekly release notes from changes merged since the previous completed review and returns them in chat. Stops before publishing, tagging, creating a release or changing the repository.",
+      "does_ja": "前回の確認完了範囲以降にマージされた変更から、週次リリースノートの下書きを作ってチャットに返します。公開・タグ付け・リリース作成・リポジトリ変更の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Releases",
+      "stops": [
+        "Before publishing notes, creating a tag or release, merging, pushing or deploying.",
+        "Before sending messages, purchasing, paying, deleting or changing production.",
+        "When history is unreadable, revisions change or the previous coverage record is missing: it reports the gap without inventing an interval.",
+        "When coverage is partial: it retains the previous completed boundary and reports unread changes without retrying automatically."
+      ],
+      "first3": [
+        "Fill the weekly schedule and connected repository, then send the text to the Bot that should own the draft.",
+        "Read \"When to run\" and use Edit if the weekday, time or time zone is wrong.",
+        "Use Test once on a repository you can inspect. It does real work; compare draft references and interval boundaries with merge records, and check that no tag or release was created."
+      ],
+      "blanks": [
+        {
+          "name": "[DAY]",
+          "what": "Weekday for preparing the draft."
+        },
+        {
+          "name": "[TIME]",
+          "what": "Local time for the weekly draft."
+        },
+        {
+          "name": "[TIMEZONE]",
+          "what": "Time zone for the weekly schedule, written out."
+        },
+        {
+          "name": "[REPO]",
+          "what": "Connected repository whose merged changes should be read."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-release-notes-weekly-draft.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-release-notes-weekly-draft/"
+    },
+    {
+      "id": "routine-expired-approvals-weekly",
+      "kind": "routine",
+      "title": "Weekly review of expired approvals",
+      "title_ja": "承認期限切れで未実行になった作業の週次確認",
+      "does": "Lists actions this Bot reported as not done after an approval card expired during the past week. Asks which to prepare again and stops before redoing any action.",
+      "does_ja": "このBotが過去1週間に、承認カードの期限切れで未実行と報告した作業を一覧にします。どれを再び準備するか尋ね、再実行する前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Approvals",
+      "stops": [
+        "Before redoing an action, rerunning a routine or raising a replacement approval card automatically.",
+        "Before preparing an action again: it waits for your selection; that selection does not approve execution.",
+        "Before sending, publishing, purchasing, paying, deleting or changing production.",
+        "When reports are unreadable or history is incomplete: it reports coverage gaps instead of assuming no cards expired."
+      ],
+      "first3": [
+        "Fill the weekday, time and time zone, then send the text to the Bot whose expired approvals you want reviewed.",
+        "Read \"When to run\" and use Edit if the weekly schedule or time zone differs from your request.",
+        "Use Test once with a small set of known reports. It does real work; compare the list with those reports and check that nothing was prepared or rerun."
+      ],
+      "blanks": [
+        {
+          "name": "[DAY]",
+          "what": "Weekday for the weekly review."
+        },
+        {
+          "name": "[TIME]",
+          "what": "Local time for the review."
+        },
+        {
+          "name": "[TIMEZONE]",
+          "what": "Time zone for the weekly schedule, written out."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/skills-routines-and-automations",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "routines/routine-expired-approvals-weekly.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/routine-expired-approvals-weekly/"
+    },
+    {
       "id": "routine-usage-review-weekly",
       "kind": "routine",
       "title": "Weekly routine usage review",
@@ -1199,6 +2129,97 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/routine-usage-review-weekly/"
     },
     {
+      "id": "bot-calendar-desk",
+      "kind": "bot",
+      "title": "Calendar desk, review and proposed moves",
+      "title_ja": "予定の確認と移動案を作るBot",
+      "does": "Reviews upcoming commitments against your scheduling rules and keeps a list of proposed moves. It stops before changing events, declining invitations or sending invites.",
+      "does_ja": "予定をあなたのスケジュールのルールと照らし合わせ、移動案を一覧にします。予定の変更、招待の辞退、招待の送信の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Calendar",
+      "stops": [
+        "Before moving, editing, declining or deleting events, or sending invitations: it asks for approval of the exact change.",
+        "Before sending messages, publishing, purchasing, paying or changing production: it asks first.",
+        "Before applying approval for one occurrence to a whole recurring series: that scope needs a separate decision.",
+        "When calendars, current details or the time zone are unavailable: affected proposals stay pending."
+      ],
+      "first3": [
+        "Fill the blanks with the calendars, review window, report time zone and rules for proposed moves.",
+        "Paste the first message into a new Bot and ask it to remember your scheduling preferences and approval boundaries.",
+        "Ask for one calendar review and compare each proposed move with the current event and any recurring series."
+      ],
+      "blanks": [
+        {
+          "name": "[CALENDARS]",
+          "what": "The calendars this Bot may read."
+        },
+        {
+          "name": "[REVIEW_WINDOW]",
+          "what": "The dates or rolling period to review when asked."
+        },
+        {
+          "name": "[TIMEZONE]",
+          "what": "The time zone used for all times in the decision list."
+        },
+        {
+          "name": "[MOVE_RULES]",
+          "what": "Working hours, fixed commitments, travel gaps and other limits for proposed moves."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "bots/bot-calendar-desk.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/bot-calendar-desk/"
+    },
+    {
+      "id": "bot-code-review-desk",
+      "kind": "bot",
+      "title": "Code review desk, pull request notes only",
+      "title_ja": "プルリクエストのレビュー所見をまとめるBot",
+      "does": "Prepares pull request notes in named repositories and tracks concerns across revisions. It stops before commenting, approving, merging or pushing and returns the notes in chat.",
+      "does_ja": "指定したリポジトリのプルリクエストを読み、版ごとに懸念点の変化を追います。コメント、承認、マージ、プッシュの前で止まり、所見をチャットに返します。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Code review",
+      "stops": [
+        "Before pull request comments, posted reviews, approvals, merges, pushes or file edits: it asks first.",
+        "Before sending elsewhere, publishing, purchasing, paying, deleting, deploying, force operations or changing production.",
+        "Before widening repository access: it asks first; it never executes code from a pull request.",
+        "When evidence is missing or the revision changes: it limits conclusions and marks affected notes stale."
+      ],
+      "first3": [
+        "Fill the allowed repositories, review priorities and review guide blanks.",
+        "Send the message to a new Bot with readable repository material and ask it to remember the rules.",
+        "Ask for notes on one pull request, then compare its recorded revisions and concerns with the diff before requesting another revision review."
+      ],
+      "blanks": [
+        {
+          "name": "[REPOSITORIES]",
+          "what": "The exact repositories this Bot may review through connected apps or supplied material."
+        },
+        {
+          "name": "[REVIEW_PRIORITIES]",
+          "what": "The behaviors or failure cases that deserve particular attention."
+        },
+        {
+          "name": "[REVIEW_GUIDE]",
+          "what": "The current source of review criteria for the named repositories."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/how-grok-bot-works",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "bots/bot-code-review-desk.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/bot-code-review-desk/"
+    },
+    {
       "id": "bot-custom-rules-starter",
       "kind": "bot",
       "title": "Custom Rules for draft preparation",
@@ -1237,6 +2258,49 @@
       ],
       "file": "bots/bot-custom-rules-starter.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/bot-custom-rules-starter/"
+    },
+    {
+      "id": "bot-docs-desk",
+      "kind": "bot",
+      "title": "Docs desk, proposed updates and open decisions",
+      "title_ja": "文書の更新案と未決事項の管理担当Bot",
+      "does": "Tracks stale facts and proposed edits across a named document set, carrying open decisions between reviews. Stops before editing documents, posting comments or publishing changes.",
+      "does_ja": "指定した文書群の古い情報と修正案を整理し、未決事項を次の確認に引き継ぎます。文書の編集、コメント投稿、変更の公開の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Docs",
+      "stops": [
+        "Before editing documents, posting comments, sending notices or publishing changes: it asks first.",
+        "Before purchasing, paying, deleting documents or changing production: it asks first.",
+        "When references are missing, stale or contradictory: it holds the affected proposal and names the evidence gap.",
+        "When a document revision changes: it rereads the passage before reusing a proposal or marking it resolved."
+      ],
+      "first3": [
+        "Fill the blanks with the bounded document set, current references and freshness rules.",
+        "Paste the message into a new Bot and ask it to remember the document scope and approval boundaries.",
+        "Ask for a review of two related documents; compare the proposed edits and shared facts with the cited sources."
+      ],
+      "blanks": [
+        {
+          "name": "[DOCUMENT_SET]",
+          "what": "The named documents or bounded collection this Bot should review."
+        },
+        {
+          "name": "[CURRENT_REFERENCES]",
+          "what": "Named source documents or records that support current facts."
+        },
+        {
+          "name": "[FRESHNESS_RULES]",
+          "what": "Which facts need recent evidence and the acceptable age of that evidence."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "bots/bot-docs-desk.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/bot-docs-desk/"
     },
     {
       "id": "bot-expenses-desk",
@@ -1333,6 +2397,54 @@
       ],
       "file": "bots/bot-inbox-desk.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/bot-inbox-desk/"
+    },
+    {
+      "id": "bot-incident-notes-desk",
+      "kind": "bot",
+      "title": "Incident desk, first notes and open questions",
+      "title_ja": "障害の初動メモと不明点を整理するBot",
+      "does": "Prepares incident notes on what fired, recent changes and what to check next. It stops at notes and never changes production, pages anyone or posts publicly.",
+      "does_ja": "発生したアラート、最近の変更、次に確認することを障害メモにまとめます。メモの作成までで止まり、本番の変更、担当者の呼び出し、公開投稿はしません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Incidents",
+      "stops": [
+        "Before production changes, restarts, paging or public posts: it returns notes only.",
+        "Before sending notifications, publishing, purchasing, paying or deleting records: it takes no action.",
+        "Before sharing notes outside the chat or widening access: it asks first.",
+        "When evidence is missing, stale or contradictory: it marks claims unresolved and never infers recovery from silence."
+      ],
+      "first3": [
+        "Fill the service scope, alert source, change source and evidence window blanks.",
+        "Send the message to a new Bot and ask it to remember the scope and boundaries.",
+        "Give it one incident reference, then compare the alert details and recent changes with the records before requesting an update."
+      ],
+      "blanks": [
+        {
+          "name": "[SERVICE_SCOPE]",
+          "what": "The services or components whose incidents this Bot may examine."
+        },
+        {
+          "name": "[ALERT_SOURCE]",
+          "what": "The connected app or supplied records containing alert details."
+        },
+        {
+          "name": "[CHANGE_SOURCE]",
+          "what": "The readable source of recent service changes, with timestamps."
+        },
+        {
+          "name": "[LOOKBACK]",
+          "what": "The evidence window around each incident, including the time zone."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/how-grok-bot-works",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "bots/bot-incident-notes-desk.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/bot-incident-notes-desk/"
     },
     {
       "id": "bot-one-job-starter",
@@ -1432,6 +2544,53 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/bot-primary-brief/"
     },
     {
+      "id": "bot-purchasing-desk",
+      "kind": "bot",
+      "title": "Purchasing desk, quotes and renewal preparation",
+      "title_ja": "見積もりと契約更新の準備担当Bot",
+      "does": "Prepares purchase comparisons and renewal decisions from current quotes, with expiry dates and open questions. Stops before contacting vendors; never buys, renews, cancels or pays.",
+      "does_ja": "現在の見積もりをもとに購入や契約更新の比較資料を作り、有効期限と未解決の質問を整理します。取引先への連絡前に止まり、購入・更新・解約・支払いは行いません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Purchasing",
+      "stops": [
+        "Before buying, renewing, cancelling or paying: these actions remain yours.",
+        "Before contacting vendors, sending requests, publishing comparisons, deleting records or changing production: it asks first.",
+        "When a quote expires or its scope differs from the request: it holds that option for clarification.",
+        "When current prices or renewal terms are unavailable: it marks them unknown rather than using remembered figures."
+      ],
+      "first3": [
+        "Fill the blanks with the purchase scope, decision criteria, quote sources and renewal register.",
+        "Paste the first message into a new Bot and ask it to remember the preparation rules.",
+        "Ask for one purchase comparison; check quote dates, missing costs and decision status against the sources."
+      ],
+      "blanks": [
+        {
+          "name": "[PURCHASE_SCOPE]",
+          "what": "The goods, services or purchase requests this Bot should prepare."
+        },
+        {
+          "name": "[BUYING_CRITERIA]",
+          "what": "Your required quantity, acceptable terms, budget and decision priorities."
+        },
+        {
+          "name": "[QUOTE_SOURCES]",
+          "what": "Named connected apps or supplied files containing quotes and current prices."
+        },
+        {
+          "name": "[RENEWAL_REGISTER]",
+          "what": "The renewal list and agreement records to read, or none if there are no renewals."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "bots/bot-purchasing-desk.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/bot-purchasing-desk/"
+    },
+    {
       "id": "bot-release-desk",
       "kind": "bot",
       "title": "Release desk, preparation notes only",
@@ -1526,6 +2685,64 @@
       ],
       "file": "bots/bot-research-desk.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/bot-research-desk/"
+    },
+    {
+      "id": "bot-team-intake-desk",
+      "kind": "bot",
+      "title": "Team intake desk, records and routing notes",
+      "title_ja": "チームの依頼を記録して担当候補を整理するBot",
+      "does": "Records team requests with proposed owners or queues and missing information. It stops before contacting owners, changing assignments or doing the requested work.",
+      "does_ja": "チームの依頼を、担当者や窓口の候補、不足情報とともに記録します。担当者への連絡、割り当ての変更、依頼内容の実行の前で止まります。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Intake",
+      "stops": [
+        "Before contacting proposed owners or changing assignments elsewhere: routing stays in the intake ledger.",
+        "Before executing a request: recording it never authorizes the work.",
+        "Before sending, publishing content or the Bot, purchasing, paying, deleting, changing production or adding shared access: it asks first.",
+        "Before adopting a Collaborator teaching: the owner or a Manager must approve the suggestion.",
+        "When source records or routing rules are missing, stale or contradictory: affected entries stay pending."
+      ],
+      "first3": [
+        "Fill the blanks and have the owner or a Manager put the short description under About in the Team Bot details.",
+        "Add the listed setup materials only after checking that everyone who chats with the Bot may use them, then send the first message.",
+        "Try a small request set and inspect the ledger, proposed routing and missing details before relying on the intake rules."
+      ],
+      "blanks": [
+        {
+          "name": "[REQUEST_SCOPE]",
+          "what": "The kinds of team requests this Bot accepts for intake."
+        },
+        {
+          "name": "[INTAKE_RULES]",
+          "what": "Required request details and rules for recording incomplete or duplicate requests."
+        },
+        {
+          "name": "[ROUTING_MAP]",
+          "what": "The current mapping from request types to proposed owners or queues."
+        },
+        {
+          "name": "[REQUEST_SOURCES]",
+          "what": "Shared apps and request sources that all Bot users may access."
+        },
+        {
+          "name": "[SHARED_SKILLS]",
+          "what": "Intake skills suitable for everyone using this Team Bot."
+        },
+        {
+          "name": "[SHARED_FILES]",
+          "what": "Shared files containing the current intake rules and routing map."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/team-bots",
+        "https://docs.x.ai/grok-bot/create-a-team-bot",
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "bots/bot-team-intake-desk.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/bot-team-intake-desk/"
     },
     {
       "id": "bot-team-support-desk",
@@ -1661,6 +2878,85 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/proc-share-scrub/"
     },
     {
+      "id": "proc-first-message-check",
+      "kind": "procedure",
+      "title": "Check a first message before you send it",
+      "title_ja": "最初のメッセージを送る前の点検",
+      "does": "A checklist for the first message to a new Bot: one job, sources, rules to remember, approval boundaries, no secrets. Stops before the message is sent; nothing is sent, published, paid for or deleted.",
+      "does_ja": "新しいBotへの最初のメッセージを点検する手順です。仕事が1つに絞られているか、参照元・覚えておく決まり・事前の承認が必要な操作が書かれているか、秘密情報が入っていないかを確認します。メッセージを送る前で止まり、送信・公開・支払い・削除は行いません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Setup",
+      "stops": [
+        "Before sending the first message: the checklist ends with the text still unsent.",
+        "Before sending, publishing, purchasing, paying, deleting anything or changing production through the Bot.",
+        "When the text holds a password, card number or API key: remove it and stop until it is gone.",
+        "When the job cannot be said in one sentence: split it before going on."
+      ],
+      "first3": [
+        "Write the Bot name and its one job into the two blanks.",
+        "Read your draft first message against steps 2 to 9, one step at a time.",
+        "Stop at step 12 with the message still unsent, and decide yourself whether to send it."
+      ],
+      "blanks": [
+        {
+          "name": "[BOT_NAME]",
+          "what": "The name of the new Bot the message is for."
+        },
+        {
+          "name": "[JOB]",
+          "what": "The one job this Bot will have, in one sentence."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "procedures/proc-first-message-check.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/proc-first-message-check/"
+    },
+    {
+      "id": "proc-team-bot-before-publish",
+      "kind": "procedure",
+      "title": "Check a Team Bot draft before Publish",
+      "title_ja": "Team Bot を Publish する前の点検",
+      "does": "A checklist for a Team Bot that is still a Draft: the About description, plugins, apps, secrets, skills, files and roles. Stops before Publish; nothing is published, paid for or deleted.",
+      "does_ja": "まだ Draft の Team Bot を点検する手順です。About の説明、プラグイン、アプリ、シークレット、スキル、ファイル、役割を見ます。Publish の前で止まります。公開・支払い・削除は行わず、このBotとのチャット以外への送信もしません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Team Bots",
+      "stops": [
+        "Before pressing Publish: the checklist ends with the Team Bot still a Draft.",
+        "Before sending, purchasing, paying, deleting anything or changing production.",
+        "When a shared app or secret reaches data the whole audience should not see: remove it and stop until it is gone.",
+        "When nobody is named to review what teammates teach the Bot: keep it a Draft."
+      ],
+      "first3": [
+        "Write the Team Bot name and the people who will use it into the two blanks.",
+        "Open the Bot's details and go through About, Plugins, Secrets, Skills and Files in that order.",
+        "Stop at step 12 with the Bot still a Draft, and decide yourself whether to publish."
+      ],
+      "blanks": [
+        {
+          "name": "[TEAM_BOT_NAME]",
+          "what": "The Team Bot draft you are checking."
+        },
+        {
+          "name": "[AUDIENCE]",
+          "what": "The teammates who will be able to chat with it."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/team-bots",
+        "https://docs.x.ai/grok-bot/create-a-team-bot",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "procedures/proc-team-bot-before-publish.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/proc-team-bot-before-publish/"
+    },
+    {
       "id": "proc-webhook-trigger-check",
       "kind": "procedure",
       "title": "Check a webhook routine before use",
@@ -1699,6 +2995,45 @@
       ],
       "file": "procedures/proc-webhook-trigger-check.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/proc-webhook-trigger-check/"
+    },
+    {
+      "id": "proc-description-to-chat",
+      "kind": "procedure",
+      "title": "Move old Description text into chat",
+      "title_ja": "以前の Description の文面をチャットへ移す",
+      "does": "For people who kept instructions in a personal Bot's Description: say the same rules in chat, ask the Bot to remember them, check what it kept. Sends nothing outside the Bot's chat; publishes and deletes nothing.",
+      "does_ja": "個人のBotの Description に指示を入れていた人向けの手順です。同じ決まりをチャットで伝え、覚えておくよう頼み、何を覚えたかを確かめます。このBotとのチャット以外への送信はせず、公開・支払い・削除も行いません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Setup",
+      "stops": [
+        "Before the Bot acts on the moved text: the checklist only sets rules and asks what the Bot kept.",
+        "Before sending anything outside the Bot's chat, publishing, purchasing, paying, deleting or changing production.",
+        "When the old text holds a login, card number or API key: leave it out. Logins and card numbers go in Vault; API keys go through a secure secret card.",
+        "When the Bot's answer differs from your text: correct it before giving the Bot any work."
+      ],
+      "first3": [
+        "Write the Bot name and paste your old text into the two blanks.",
+        "Split the old text into the job, the lasting rules and everything else, as in steps 3 to 5.",
+        "Send the job and the rules in chat, ask the Bot to remember them, then ask what it kept and check the answer."
+      ],
+      "blanks": [
+        {
+          "name": "[BOT_NAME]",
+          "what": "The personal Bot whose instructions used to sit in a Description."
+        },
+        {
+          "name": "[OLD_TEXT]",
+          "what": "The text you used to keep there, from your own copy."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "procedures/proc-description-to-chat.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/proc-description-to-chat/"
     },
     {
       "id": "proc-routine-usage-budget",
@@ -1801,6 +3136,44 @@
       "page": "https://botshelfvampire.com/grok-bot/tools/proc-taught-skill-hardening/"
     },
     {
+      "id": "proc-custom-rules-review",
+      "kind": "procedure",
+      "title": "Review your Custom Rules",
+      "title_ja": "Custom Rules の見直し",
+      "does": "A checklist for reading every \"Ask first\" and \"Allow automatically\" rule, finding overlaps and gaps, and writing proposed changes. Stops before any rule is changed; nothing is sent, published, paid for or deleted.",
+      "does_ja": "「Ask first」と「Allow automatically」のルールをすべて読み、重なりと抜けを見つけて変更案を書く手順です。ルールを変える前で止まり、送信・公開・支払い・削除は行いません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Approvals",
+      "stops": [
+        "Before adding, editing or deleting a rule: the checklist ends with a written proposal only.",
+        "Before sending, publishing, purchasing, paying, deleting anything or changing production.",
+        "When an \"Allow automatically\" rule covers sending, paying, deleting or production: mark it for removal and stop relying on it.",
+        "When you cannot say what a rule matches: mark it unclear instead of keeping it as it is."
+      ],
+      "first3": [
+        "Write the actions you never want done without you, and the ones you are content to allow, into the two blanks.",
+        "Open Custom Rules and copy both lists into a note before judging anything.",
+        "Stop at step 12 with a written proposal, and change the rules yourself afterwards."
+      ],
+      "blanks": [
+        {
+          "name": "[ASK_FIRST_ACTIONS]",
+          "what": "The actions that must always wait for you, in your own words."
+        },
+        {
+          "name": "[ALLOWED_ACTIONS]",
+          "what": "The narrow, harmless actions you are content to allow without a card."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "procedures/proc-custom-rules-review.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/proc-custom-rules-review/"
+    },
+    {
       "id": "proc-routine-preflight",
       "kind": "procedure",
       "title": "Routine preflight before it runs alone",
@@ -1843,6 +3216,45 @@
       ],
       "file": "procedures/proc-routine-preflight.md",
       "page": "https://botshelfvampire.com/grok-bot/tools/proc-routine-preflight/"
+    },
+    {
+      "id": "proc-memory-check",
+      "kind": "procedure",
+      "title": "See and correct what a Bot remembers",
+      "title_ja": "Botが覚えていることの確認と訂正",
+      "does": "Ask a Bot what it remembers on one topic, then correct or remove entries one at a time. Nothing is forgotten without your decision; nothing is sent, published, paid for or deleted elsewhere.",
+      "does_ja": "あるテーマについてBotが何を覚えているかを尋ね、1件ずつ訂正または削除する手順です。あなたが決める前に記憶を消すことはしません。外部への送信・公開・支払い・削除も行いません。",
+      "runs_on": [
+        "Grok Bot"
+      ],
+      "topic": "Memory",
+      "stops": [
+        "Before asking the Bot to forget anything: decide entry by entry, never in bulk.",
+        "Before sending, publishing, purchasing, paying, deleting files or changing production: this checklist touches memory only.",
+        "When a remembered item is a login, card number or API key: stop and ask the Bot to forget it. Logins and card numbers go in Vault; API keys go through a secure secret card.",
+        "When the Bot cannot say where an item came from: mark it unverified instead of approving it."
+      ],
+      "first3": [
+        "Write the Bot name and the topic into the two blanks.",
+        "Ask the question in step 2 and copy the answer somewhere you can mark up.",
+        "Mark each remembered item keep, correct or forget before you ask for any change."
+      ],
+      "blanks": [
+        {
+          "name": "[BOT_NAME]",
+          "what": "The Bot whose memory you are checking."
+        },
+        {
+          "name": "[TOPIC]",
+          "what": "The topic to ask about, such as a project, a vendor or your working hours."
+        }
+      ],
+      "sources": [
+        "https://docs.x.ai/grok-bot/bots",
+        "https://docs.x.ai/grok-bot/approvals-security-and-privacy"
+      ],
+      "file": "procedures/proc-memory-check.md",
+      "page": "https://botshelfvampire.com/grok-bot/tools/proc-memory-check/"
     }
   ]
 }
